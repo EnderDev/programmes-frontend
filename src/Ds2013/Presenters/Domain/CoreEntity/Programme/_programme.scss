@@ -55,6 +55,13 @@ $programme-icon-bpw-box-size: gel-typography('bpw', 'delta', 'line-height') + 18
     }
 }
 
+.programme__img-box {
+    background: #cccccc;
+    background: rgba(204, 204, 204, 0.5);
+    display: block;
+    visibility: visible;
+}
+
 .programme__img--standalone-cta:not(.programme__img--available) {
     height: $programme-icon-basic-box-size;
     width: $programme-icon-basic-box-size;
@@ -270,6 +277,7 @@ $programme-icon-bpw-box-size: gel-typography('bpw', 'delta', 'line-height') + 18
     .programme__time-remaining {
         margin: 4px 8px 0;
     }
+
 
 }
 
