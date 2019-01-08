@@ -4,7 +4,7 @@
             <thead class="week-guide__table__head g-f-l text-base br-box-highlight">
             <tr class="week-guide__table__days-row centi">
                 <th class="date-list__page week-guide__table__nav br-box-highlight">
-                    <a id="last-week" class="box-link br-page-bg-onbg--hover br-page-linkhover-ontext--hover text--no-ul text--shout" rel="prev" data-href-add-utcoffset="true" href="{{ path('schedules_by_week', {pid: schedules_by_week_page.getService().getPid(), date: schedules_by_week_page.getStartOfWeek().subWeek()|local_date('Y/\\wW')}) }}">
+                    <a id="last-week" class="box-link br-page-bg-onbg--hover br-page-linkhover-ontext--hover text--no-ul text--shout" rel="prev" data-href-add-utcoffset="true" href="{{ path('schedules_by_week', {pid: schedules_by_week_page.getService().getPid(), date: schedules_by_week_page.getStartOfWeek().subWeek()|local_date('o/\\wW')}) }}">
                         {{ gelicon('basics', 'previous', 'gelicon--centi gelicon--leading') }}{{ tr('last') }}
                     </a>
                 </th>
