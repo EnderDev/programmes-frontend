@@ -402,7 +402,7 @@ class ContentBlockMapper extends Mapper
             case 'contactform':
                 throw new HasContactFormException('Contact form found');
             default:
-                $this->logger->error('Invalid content block type. Found ' . $type);
+                $this->logger->warning('Invalid content block type. Found ' . $type);
                 break;
         }
 
