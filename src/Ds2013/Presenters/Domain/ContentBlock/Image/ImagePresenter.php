@@ -12,4 +12,19 @@ class ImagePresenter extends ContentBlockPresenter
     {
         parent::__construct($imageBlock, $inPrimaryColumn, $isPrimaryColumnFullWith, $options);
     }
+
+    /**
+     * @return string Return the right slot size for big screens (desktop)
+     */
+    public function getFullSizeImageSlot()
+    {
+        if ($this->isPrimaryColumnFullWith()) {
+            return '944px';
+        }
+        if ($this->isInPrimaryColumn()) {
+            return '530px'; // max size it can reach
+        }
+        // secondary column
+        return '397px'; // max size it can reach
+    }
 }
