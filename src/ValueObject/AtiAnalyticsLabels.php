@@ -47,6 +47,12 @@ class AtiAnalyticsLabels
             'producer' => $this->calculateProducerVariable(),
             'contentType' => $this->pageType,
             'contentId' => $this->contentId,
+            'additionalProperties' => [
+                ['name' => 'app_name', 'value' => 'programmes'],
+                ['name' => 'custom_var_2', 'value' => $this->context->getTleo()->getTitle()],
+                ['name' => 'custom_var_3', 'value' => $this->getConcatenatedAncestryTitles($this->context)],
+                ['name' => 'custom_var_4', 'value' => $this->context->getMasterbrand()->getMid()],
+            ],
         ];
 
         $labels = array_merge($labels, $this->extraLabels);
@@ -168,5 +174,16 @@ class AtiAnalyticsLabels
         }
 
         return 'BBC';
+    }
+
+    /**
+     * This function uses recursion to climb up the parents tree and return a concatenation of the titles
+     */
+    private function getConcatenatedAncestryTitles(? Programme $context) : string
+    {
+        $titlesConcatenation = implode(', ', array_map(function ($ancestry) {
+            return $ancestry->getTitle();
+        }, array_reverse($context->getAncestry())));
+        return $titlesConcatenation;
     }
 }
