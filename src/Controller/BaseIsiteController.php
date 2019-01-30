@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class BaseIsiteController extends BaseController
 {
     protected const MAX_LIST_DISPLAYED_ITEMS = 48;
+    private const ARTICLE_WITH_CONTACT_ROUTE = 'article_with_contact_form';
 
     /** @var IsiteKeyHelper */
     protected $isiteKeyHelper;
@@ -34,6 +35,13 @@ abstract class BaseIsiteController extends BaseController
     protected $slug;
 
     abstract protected function getRouteName();
+
+    protected function getRedirectIfCurrentURLIsContactForm(bool $preview): ?Response
+    {
+        if ($this->request()->attributes->get('_route') == self::ARTICLE_WITH_CONTACT_ROUTE) {
+            return $this->redirectWith($this->key, $this->slug, $preview, $this->getRouteName());
+        }
+    }
 
     protected function getRedirectFromGuidToKeyIfNeeded(bool $preview): ?Response
     {

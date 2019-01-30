@@ -29,6 +29,7 @@ class ShowController extends BaseIsiteController
         $this->isiteService = $isiteService;
 
         $preview = $this->getPreview();
+
         if ($redirect = $this->getRedirectFromGuidToKeyIfNeeded($preview)) {
             return $redirect;
         }
@@ -46,6 +47,10 @@ class ShowController extends BaseIsiteController
             }
 
             return $this->cachedRedirectToRoute($route, $params, 302, 3600);
+        }
+
+        if ($redirect = $this->getRedirectIfCurrentURLIsContactForm($preview)) {
+            return $redirect;
         }
 
         if ($redirect = $this->getRedirectToSlugIfNeeded($isiteObject, $preview)) {
