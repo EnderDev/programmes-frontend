@@ -25,6 +25,12 @@ programme_article_listings:
     defaults: { _controller: App\Controller\Articles\IndexController }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}'}
 
+article_with_contact_form:
+    path: /programmes/articles/{key}/{slug}/contact
+    defaults: { _controller: App\Controller\Articles\ShowController, slug: '' }
+    requirements: { key: '[a-zA-Z0-9-]{1,40}' }
+    schemes: [https]
+
 programme_credits:
     path: /programmes/{pid}/credits
     controller: App\Controller\RedirectAndCacheController::redirectAction

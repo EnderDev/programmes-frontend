@@ -43,7 +43,7 @@ class ShowController extends BaseIsiteController
             return $redirect;
         }
 
-        $this->removeHeadersForPreview($preview);
+        $this->removeHttpHeadersForPreview($preview);
         $this->initContextAndBranding($isiteObject, $guid);
 
         // Calculate siblings display

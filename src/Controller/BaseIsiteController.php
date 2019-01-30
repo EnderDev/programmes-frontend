@@ -76,7 +76,7 @@ abstract class BaseIsiteController extends BaseController
         return $this->request()->query->has('preview') && $this->request()->query->get('preview');
     }
 
-    protected function removeHeadersForPreview(bool $preview): void
+    protected function removeHttpHeadersForPreview(bool $preview): void
     {
         if ($preview) {
             $this->metaNoIndex = true;

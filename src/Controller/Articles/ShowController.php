@@ -38,10 +38,10 @@ class ShowController extends BaseIsiteController
             $isiteObject = $this->getBaseIsiteObject($guid, $preview);
         } catch (HasContactFormException $e) {
             if (!$this->slug) {
-                $route = 'article_with_contact_form_noslug';
+                $route = 'article_with_contact_form_v2_noslug';
                 $params = ['key' => $this->key];
             } else {
-                $route = 'article_with_contact_form';
+                $route = 'article_with_contact_form_v2';
                 $params = ['key' => $this->key, 'slug' => $this->slug];
             }
 
@@ -52,7 +52,7 @@ class ShowController extends BaseIsiteController
             return $redirect;
         }
 
-        $this->removeHeadersForPreview($preview);
+        $this->removeHttpHeadersForPreview($preview);
         $this->initContextAndBranding($isiteObject, $guid);
         $parents = $isiteObject->getParents();
         $siblingPromise = $isiteService->setChildrenOn($parents, $isiteObject->getProjectSpace()); //if more than 48, extras are removed

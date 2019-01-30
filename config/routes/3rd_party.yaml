@@ -77,13 +77,15 @@ categories_show:
     requirements: { categoryType: 'formats|genres', urlKeyHierarchy: '.+' }
     schemes: [https]
 
-article_with_contact_form:
+article_with_contact_form_v2:
+    host: www.bbc.co.uk
     path: /programmes/articles/{key}/{slug}/contact
     defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
     requirements: { key: '[a-zA-Z0-9-]{1,40}' }
     schemes: [https]
 
-article_with_contact_form_noslug:
+article_with_contact_form_v2_noslug:
+    host: www.bbc.co.uk
     path: /programmes/articles/{key}/contact
     defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
     requirements: { key: '[a-zA-Z0-9-]{1,40}' }
