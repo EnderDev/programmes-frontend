@@ -3,10 +3,13 @@ declare(strict_types = 1);
 
 namespace App\Controller\Helpers;
 
+use App\ExternalApi\Isite\Domain\Article;
+use App\ExternalApi\Isite\Domain\Profile;
 use BBC\ProgrammesPagesService\Domain\Entity\Broadcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\Entity\CollapsedBroadcast;
 use BBC\ProgrammesPagesService\Domain\Entity\Contribution;
+use BBC\ProgrammesPagesService\Domain\Entity\CoreEntity;
 use BBC\ProgrammesPagesService\Domain\Entity\Episode;
 use BBC\ProgrammesPagesService\Domain\Entity\Programme;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeContainer;
@@ -106,6 +109,33 @@ class StructuredDataHelper
     public function getSchemaForNonActorContribution(Contribution $contribution): array
     {
         return $this->schemaHelper->buildSchemaForContributor($contribution);
+    }
+
+    public function getSchemaForCharacter(Profile $profile, CoreEntity $programme, bool $showParent = true)
+    {
+        $schema = $this->schemaHelper->buildSchemaForCharacter($profile);
+        if ($showParent) {
+            if (!$programme->isTlec()) {
+                $programme = $programme->getParent();
+            }
+            $schema['isPartOf'] = $this->getSchemaForProgrammeContainer($programme);
+        }
+
+        return $schema;
+    }
+
+    public function getSchemaForArticle(Article $article, CoreEntity $programme, bool $showParent = true)
+    {
+        if (!$programme->isTlec()) {
+            $programme = $programme->getParent();
+        }
+        $schema = $this->schemaHelper->buildSchemaForArticle($article, $programme);
+
+        if ($showParent) {
+            $schema['isPartOf'] = $this->getSchemaForProgrammeContainer($programme);
+        }
+
+        return $schema;
     }
 
     public function getSchemaForProgrammeContainerAndParents(Programme $programmeContainer): array

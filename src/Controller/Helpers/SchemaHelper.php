@@ -4,15 +4,20 @@ declare(strict_types = 1);
 namespace App\Controller\Helpers;
 
 use App\DsShared\Helpers\StreamableHelper;
+use App\ExternalApi\Isite\Domain\Article;
+use App\ExternalApi\Isite\Domain\IsiteImage;
+use App\ExternalApi\Isite\Domain\Profile;
 use BBC\ProgrammesPagesService\Domain\Entity\BroadcastInfoInterface;
 use BBC\ProgrammesPagesService\Domain\Entity\Clip;
 use BBC\ProgrammesPagesService\Domain\Entity\Collection;
 use BBC\ProgrammesPagesService\Domain\Entity\Contribution;
+use BBC\ProgrammesPagesService\Domain\Entity\CoreEntity;
 use BBC\ProgrammesPagesService\Domain\Entity\Episode;
 use BBC\ProgrammesPagesService\Domain\Entity\Network;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeContainer;
 use BBC\ProgrammesPagesService\Domain\Entity\Series;
 use BBC\ProgrammesPagesService\Domain\Entity\Service;
+use BBC\ProgrammesPagesService\Domain\ValueObject\Pid;
 use Cake\Chronos\ChronosInterval;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -216,6 +221,43 @@ class SchemaHelper
         if ($contribution->getContributor()->getMusicBrainzId()) {
             $schema['@id'] = $this->router->generate('music_artist', ['mbid' => $contribution->getContributor()->getMusicBrainzId()]);
         }
+        return $schema;
+    }
+
+    public function buildSchemaForCharacter(Profile $profile)
+    {
+        $imageUrl = null;
+        if ($profile->getPortraitImage()) {
+            $image = new IsiteImage(new Pid($profile->getPortraitImage()));
+            $imageUrl = $image->getUrl(480);
+        } else if ($profile->getImage()) {
+            $image = new IsiteImage(new Pid($profile->getImage()));
+            $imageUrl = $image->getUrl(480);
+        }
+        $schema = [
+            '@type' => 'character',
+            'character' => [
+                '@type' => 'person',
+                'name' => $profile->getTitle(),
+                ],
+        ];
+        if ($imageUrl) {
+            $schema['character']['image'] = $imageUrl;
+        }
+        return $schema;
+    }
+
+    public function buildSchemaForArticle(Article $article, CoreEntity $programme)
+    {
+        $schema['@type'] = 'Article';
+        $schema['description'] = $programme->getTitle() . ' - ' . $article->getTitle();
+        $schema['headline'] = $article->getShortSynopsis();
+        if ($article->getImage()) {
+            $image = new IsiteImage(new Pid($article->getImage()));
+            $schema['image'] = $image->getUrl(480);
+        }
+        $schema['Author'] = $this->getSchemaForOrganisation();
+
         return $schema;
     }
 }

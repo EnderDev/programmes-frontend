@@ -5,7 +5,13 @@ namespace App\Controller\Articles;
 
 use App\Controller\BaseIsiteController;
 use App\Controller\Helpers\IsiteKeyHelper;
+use App\Controller\Helpers\StructuredDataHelper;
+use App\Ds2013\Presenters\Utilities\Paginator\PaginatorPresenter;
+use App\ExternalApi\Isite\Domain\Article;
+use App\ExternalApi\Isite\IsiteResult;
 use App\ExternalApi\Isite\Service\ArticleService;
+use BBC\ProgrammesPagesService\Domain\Entity\CoreEntity;
+use BBC\ProgrammesPagesService\Domain\Entity\Group;
 use BBC\ProgrammesPagesService\Service\CoreEntitiesService;
 use App\Exception\HasContactFormException;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +24,8 @@ class ShowController extends BaseIsiteController
         Request $request,
         ArticleService $isiteService,
         IsiteKeyHelper $isiteKeyHelper,
-        CoreEntitiesService $coreEntitiesService
+        CoreEntitiesService $coreEntitiesService,
+        StructuredDataHelper $structuredDataHelper
     ) {
         $this->setIstatsProgsPageType('article_show');
         $this->setAtiContentLabels('article-show-related', 'article');
@@ -55,22 +62,26 @@ class ShowController extends BaseIsiteController
 
         $this->removeHeadersForPreview($preview);
         $this->initContextAndBranding($isiteObject, $guid);
+        $programme = $this->getParentProgramme($this->context);
         $parents = $isiteObject->getParents();
         $siblingPromise = $isiteService->setChildrenOn($parents, $isiteObject->getProjectSpace()); //if more than 48, extras are removed
         $childPromise = $isiteService->setChildrenOn([$isiteObject], $isiteObject->getProjectSpace(), $this->getPage());
         $response = $this->resolvePromises(['children' => $childPromise, 'siblings' => $siblingPromise]);
+
+        $schema = $this->getSchema($structuredDataHelper, $isiteObject, $programme);
+
         $children = reset($response['children']);
         $paginatorPresenter = null;
         if ($children) {
             $paginatorPresenter = $this->getPaginator($children->getTotal());
         }
-
         return $this->renderWithChrome(
             'articles/show.html.twig',
             [
+                'schema' => $schema,
                 'guid' => $guid,
                 'projectSpace' => $isiteObject->getProjectSpace(),
-                'programme' => $this->getParentProgramme($this->context),
+                'programme' => $programme,
                 'article' => $isiteObject,
                 'paginatorPresenter' => $paginatorPresenter,
             ]
@@ -80,5 +91,11 @@ class ShowController extends BaseIsiteController
     protected function getRouteName()
     {
         return 'programme_article';
+    }
+
+    private function getSchema(StructuredDataHelper $structuredDataHelper, Article $article, CoreEntity $programme)
+    {
+        $schema = $structuredDataHelper->getSchemaForArticle($article, $programme);
+        return $schema;
     }
 }
