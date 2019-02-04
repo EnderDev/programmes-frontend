@@ -12,6 +12,7 @@ use App\ExternalApi\Isite\IsiteResult;
 use App\ExternalApi\Isite\Service\ArticleService;
 use BBC\ProgrammesPagesService\Domain\Entity\CoreEntity;
 use BBC\ProgrammesPagesService\Domain\Entity\Group;
+use BBC\ProgrammesPagesService\Domain\Entity\Programme;
 use BBC\ProgrammesPagesService\Service\CoreEntitiesService;
 use App\Exception\HasContactFormException;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,7 +94,7 @@ class ShowController extends BaseIsiteController
         return 'programme_article';
     }
 
-    private function getSchema(StructuredDataHelper $structuredDataHelper, Article $article, CoreEntity $programme)
+    private function getSchema(StructuredDataHelper $structuredDataHelper, Article $article, Programme $programme)
     {
         $schema = $structuredDataHelper->getSchemaForArticle($article, $programme);
         return $schema;

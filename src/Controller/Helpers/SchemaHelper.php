@@ -14,6 +14,7 @@ use BBC\ProgrammesPagesService\Domain\Entity\Contribution;
 use BBC\ProgrammesPagesService\Domain\Entity\CoreEntity;
 use BBC\ProgrammesPagesService\Domain\Entity\Episode;
 use BBC\ProgrammesPagesService\Domain\Entity\Network;
+use BBC\ProgrammesPagesService\Domain\Entity\Programme;
 use BBC\ProgrammesPagesService\Domain\Entity\ProgrammeContainer;
 use BBC\ProgrammesPagesService\Domain\Entity\Series;
 use BBC\ProgrammesPagesService\Domain\Entity\Service;
@@ -247,7 +248,7 @@ class SchemaHelper
         return $schema;
     }
 
-    public function buildSchemaForArticle(Article $article, CoreEntity $programme)
+    public function buildSchemaForArticle(Article $article, Programme $programme)
     {
         $schema['@type'] = 'Article';
         $schema['description'] = $programme->getTitle() . ' - ' . $article->getTitle();

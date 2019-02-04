@@ -11,6 +11,7 @@ use App\ExternalApi\Isite\Domain\Profile;
 use App\ExternalApi\Isite\Service\ProfileService;
 use BBC\ProgrammesPagesService\Domain\Entity\CoreEntity;
 use BBC\ProgrammesPagesService\Domain\Entity\Group;
+use BBC\ProgrammesPagesService\Domain\Entity\Programme;
 use BBC\ProgrammesPagesService\Service\CoreEntitiesService;
 use GuzzleHttp\Promise\FulfilledPromise;
 use Symfony\Component\HttpFoundation\Request;
@@ -115,7 +116,7 @@ class ShowController extends BaseIsiteController
         return 'programme_profile';
     }
 
-    private function getSchema(StructuredDataHelper $structuredDataHelper, Profile $profile, CoreEntity $programme)
+    private function getSchema(StructuredDataHelper $structuredDataHelper, Profile $profile, Programme $programme)
     {
         if ($profile->isIndividual()) {
             $schema = $structuredDataHelper->getSchemaForCharacter($profile, $programme);

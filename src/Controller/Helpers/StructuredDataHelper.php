@@ -111,7 +111,7 @@ class StructuredDataHelper
         return $this->schemaHelper->buildSchemaForContributor($contribution);
     }
 
-    public function getSchemaForCharacter(Profile $profile, CoreEntity $programme, bool $showParent = true)
+    public function getSchemaForCharacter(Profile $profile, Programme $programme, bool $showParent = true)
     {
         $schema = $this->schemaHelper->buildSchemaForCharacter($profile);
         if ($showParent) {
@@ -124,7 +124,7 @@ class StructuredDataHelper
         return $schema;
     }
 
-    public function getSchemaForArticle(Article $article, CoreEntity $programme, bool $showParent = true)
+    public function getSchemaForArticle(Article $article, Programme $programme, bool $showParent = true)
     {
         if (!$programme->isTlec()) {
             $programme = $programme->getParent();
