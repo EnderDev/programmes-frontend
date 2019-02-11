@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Branding\BrandingPlaceholderResolver;
 use App\Cosmos\Dials;
 use App\Ds2013\Factory\PresenterFactory;
+use App\DsShared\Factory\HelperFactory;
 use App\Translate\TranslateProvider;
 use App\ValueObject\AnalyticsCounterName;
 use App\ValueObject\AtiAnalyticsLabels;
@@ -68,6 +69,8 @@ abstract class BaseController extends AbstractController
 
     private $isInternational = false;
 
+    private $helperFactory;
+
     protected $canonicalUrl;
 
     /** @var string */
@@ -96,7 +99,7 @@ abstract class BaseController extends AbstractController
         ]);
     }
 
-    public function __construct()
+    public function __construct(HelperFactory $helperFactory)
     {
         $this->response = new Response();
         // It is required to set the cache-control header when creating the response object otherwise Symfony
@@ -106,6 +109,7 @@ abstract class BaseController extends AbstractController
         $this->response()->headers->set('X-Frame-Options', 'SAMEORIGIN');
         // Blocks a request if the requested type is different from the MIME type
         $this->response()->headers->set('X-Content-Type-Options', 'nosniff');
+        $this->helperFactory = $helperFactory;
     }
 
     protected function getCanonicalUrl(): string
@@ -234,8 +238,10 @@ abstract class BaseController extends AbstractController
 
         $cosmosInfo = $this->container->get(CosmosInfo::class);
         $atiAnalyticsLabelsValues = null;
+
         if ($this->container->get(Dials::class)->get('ati-stats') === 'true') {
             $atiAnalyticsLabelsValues = new AtiAnalyticsLabels(
+                $this->helperFactory->getProducerVariableHelper(),
                 $this->context,
                 $this->istatsProgsPageType,
                 $cosmosInfo,

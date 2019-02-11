@@ -35,6 +35,12 @@ define(['jquery-1.9', 'smp/smpStatePersistance', 'bump-3'], function ($, SmpStat
                     },
                     statsObject: {
                         deviceId: null,
+                        brand : 'brand',
+                        series: 'series',
+                        episode: 'episode',
+                        clip: 'clip',
+                        name: 'name',
+                        type: 'type',
                         sessionLabels: {}
                     },
                     muted: null,
@@ -101,6 +107,7 @@ define(['jquery-1.9', 'smp/smpStatePersistance', 'bump-3'], function ($, SmpStat
         var loadPlayer = function() {
             setStatsFromRecommendations();
             self.player = self.bump(self.options.container).player(self.options.smpSettings);
+            console.log(self.options.smpSettings);
             listenVolumeEvents();
             listenProgressTimeEvents();
             initMarkers();

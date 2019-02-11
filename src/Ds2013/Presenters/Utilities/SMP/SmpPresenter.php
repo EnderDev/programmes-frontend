@@ -104,6 +104,17 @@ class SmpPresenter extends Presenter
             $this->streamableVersion
         );
 
+        $series = null;
+        $episode = null;
+        foreach ($this->programmeItem->getAncestry() as $parent){
+            if($parent->getType() == 'episode'){
+                $episode = (string) $parent->getPid();
+            }
+            elseif ($parent->getType() == 'series'){
+                $series = (string) $parent->getPid();
+            }
+        }
+
         $smpConfig = [
             'container' => '#' . $this->getContainerId(),
             'pid' => (string) $this->programmeItem->getPid(),
@@ -135,6 +146,12 @@ class SmpPresenter extends Presenter
                 'appType' => 'responsive',
                 'parentPID'     => (string) $this->programmeItem->getPid(),
                 'parentPIDType' => $this->programmeItem->getType(),
+                'brand' => (string) $this->programmeItem->getTleo()->getPid(),
+                'series' => $series,
+                'episode' => $episode,
+                'clip' => (string) $this->programmeItem->getPid(),
+                'name' => $this->programmeItem->getTitle(),
+                'type' => $this->programmeItem->getType(),
                 'sessionLabels' => [
                     'bbc_site' => $this->analyticsLabels['bbc_site'] ?? '',
                     'event_master_brand' => $this->analyticsLabels['event_master_brand'] ?? '',
