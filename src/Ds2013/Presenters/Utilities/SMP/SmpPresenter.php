@@ -145,25 +145,27 @@ class SmpPresenter extends Presenter
         }
 
         $brand = $this->programmeItem->getTleo();
-//        dump($this->context);exit();
         if (!empty($this->analyticsLabels)) {
             $smpConfig['smpSettings']['statsObject'] = [
                 'siteId' => $this->analyticsLabels['bbc_site'] ?? '',
                 'product' => $this->analyticsLabels['prod_name'],
                 'appName' => $this->analyticsLabels['app_name'],
-                'appType' => 'responsive',
-                'parentPID'     => (string) $this->programmeItem->getPid(),
-                'parentPIDType' => $this->programmeItem->getType(),
+//                'appType' => 'responsive',
+//                'clipPID'     => (string) $this->programmeItem->getPid(),
+
 
                 //Vulcan stats
                 'Content' => (string) $this->programmeItem->getPid(),
-                'brand' => (string) $brand->getPid(),
-                'series' => $series,
-                'episode' => $episode,
-                'Level 2' => $this->producerVariableHelper->calculateProducerVariable($this->programmeItem),
-                'clip' => (string) $this->programmeItem->getPid(),
+                'brandPID' => (string) $brand->getPid(),
+                'appName' => $this->analyticsLabels['app_name'],
+                'seriesPID' => $series,
+                'appType' => 'responsive',
+                'clipPID' => (string) $this->programmeItem->getPid(),
+                'producer' => $this->producerVariableHelper->calculateProducerVariable($this->programmeItem),
+                'parentPIDType' => $this->programmeItem->getType(),
+                'episodePID' => $episode,
+
                 'name' => $this->programmeItem->getTitle(),
-                'type' => $this->programmeItem->getType(),
 
 
                 'sessionLabels' => [
