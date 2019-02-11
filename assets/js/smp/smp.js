@@ -35,12 +35,6 @@ define(['jquery-1.9', 'smp/smpStatePersistance', 'bump-3'], function ($, SmpStat
                     },
                     statsObject: {
                         deviceId: null,
-                        brand : 'brand',
-                        series: 'series',
-                        episode: 'episode',
-                        clip: 'clip',
-                        name: 'name',
-                        type: 'type',
                         sessionLabels: {}
                     },
                     muted: null,

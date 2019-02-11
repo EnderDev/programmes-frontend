@@ -50,7 +50,6 @@ class AtiAnalyticsLabels
         $this->chapterOne = $chapterOne;
         $this->contentId = $contentId;
         $this->producerVariableHelper = $producerVariableHelper;
-        //dump($context);exit();
     }
 
     public function orbLabels()

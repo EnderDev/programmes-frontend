@@ -28,7 +28,7 @@ parameters:
     app.idtquiz.service.class: App\ExternalApi\IdtQuiz\Service\IdtQuizService
     app.favourites.baseurl: 'https://www.bbc.co.uk/modules/plugin/musicfavourite/init'
     app.favourites.service.class: App\ExternalApi\FavouritesButton\Service\FavouritesButtonService
-    app.isite.baseurl: 'https://api.test.bbc.co.uk/isite2-content-reader'
+    app.isite.baseurl: 'https://api.live.bbc.co.uk/isite2-content-reader'
     app.isite.article_service.class: App\ExternalApi\Isite\Service\ArticleService
     app.isite.profile_service.class: App\ExternalApi\Isite\Service\ProfileService
     app.receng.baseurl: 'https://open.live.bbc.co.uk/recommend/items'

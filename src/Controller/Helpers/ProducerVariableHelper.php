@@ -25,7 +25,7 @@ class ProducerVariableHelper
     }
 
 
-    public function calculateProducerVariable(CoreEntity $context ): string
+    public function calculateProducerVariable(CoreEntity $context): string
     {
         $producersMap = [
             'bbc_afrique_radio' => 'AFRIQUE',

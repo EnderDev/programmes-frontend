@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Ds2013\Presenters\Utilities\SMP;
 
+use App\Controller\Helpers\ProducerVariableHelper;
 use App\Ds2013\Presenter;
 use App\DsShared\Helpers\SmpPlaylistHelper;
 use App\DsShared\Helpers\StreamableHelper;
@@ -58,6 +59,8 @@ class SmpPresenter extends Presenter
     /** @var string */
     private $containerId;
 
+    private $producerVariableHelper;
+
     public function __construct(
         ProgrammeItem $programmeItem,
         ?Version $streamableVersion,
@@ -68,6 +71,7 @@ class SmpPresenter extends Presenter
         UrlGeneratorInterface $router,
         CosmosInfo $cosmosInfo,
         StreamableHelper $streamableHelper,
+        ProducerVariableHelper $producerVariableHelper,
         array $options = []
     ) {
         parent::__construct($options);
@@ -82,6 +86,7 @@ class SmpPresenter extends Presenter
         $this->streamableHelper = $streamableHelper;
         self::$smpInstanceCounter++;
         $this->containerId = 'playout-' . (string) $this->programmeItem->getPid() . self::$smpInstanceCounter;
+        $this->producerVariableHelper = $producerVariableHelper;
     }
 
     public function getProgrammeItem(): ProgrammeItem
@@ -138,6 +143,9 @@ class SmpPresenter extends Presenter
         if (!empty($this->analyticsCounterName)) {
             $smpConfig['smpSettings']['counterName'] = $this->analyticsCounterName;
         }
+
+        $brand = $this->programmeItem->getTleo();
+//        dump($this->context);exit();
         if (!empty($this->analyticsLabels)) {
             $smpConfig['smpSettings']['statsObject'] = [
                 'siteId' => $this->analyticsLabels['bbc_site'] ?? '',
@@ -146,12 +154,18 @@ class SmpPresenter extends Presenter
                 'appType' => 'responsive',
                 'parentPID'     => (string) $this->programmeItem->getPid(),
                 'parentPIDType' => $this->programmeItem->getType(),
-                'brand' => (string) $this->programmeItem->getTleo()->getPid(),
+
+                //Vulcan stats
+                'Content' => (string) $this->programmeItem->getPid(),
+                'brand' => (string) $brand->getPid(),
                 'series' => $series,
                 'episode' => $episode,
+                'Level 2' => $this->producerVariableHelper->calculateProducerVariable($this->programmeItem),
                 'clip' => (string) $this->programmeItem->getPid(),
                 'name' => $this->programmeItem->getTitle(),
                 'type' => $this->programmeItem->getType(),
+
+
                 'sessionLabels' => [
                     'bbc_site' => $this->analyticsLabels['bbc_site'] ?? '',
                     'event_master_brand' => $this->analyticsLabels['event_master_brand'] ?? '',
