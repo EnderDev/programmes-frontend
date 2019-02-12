@@ -149,9 +149,7 @@ class SmpPresenter extends Presenter
             $smpConfig['smpSettings']['statsObject'] = [
                 'siteId' => $this->analyticsLabels['bbc_site'] ?? '',
                 'product' => $this->analyticsLabels['prod_name'],
-                'appName' => $this->analyticsLabels['app_name'],
-//                'appType' => 'responsive',
-//                'clipPID'     => (string) $this->programmeItem->getPid(),
+
 
 
                 //Vulcan stats

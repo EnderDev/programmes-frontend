@@ -101,7 +101,6 @@ define(['jquery-1.9', 'smp/smpStatePersistance', 'bump-3'], function ($, SmpStat
         var loadPlayer = function() {
             setStatsFromRecommendations();
             self.player = self.bump(self.options.container).player(self.options.smpSettings);
-            console.log(self.options.smpSettings);
             listenVolumeEvents();
             listenProgressTimeEvents();
             initMarkers();
