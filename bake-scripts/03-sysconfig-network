@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rm /etc/sysconfig/network || echo "cant remove syconfig/network"
