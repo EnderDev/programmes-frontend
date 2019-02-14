@@ -1,3 +1,5 @@
 #!/bin/bash
 
-rm /etc/sysconfig/network || echo "cant remove syconfig/network"
+# rm /etc/sysconfig/network || echo "cant remove syconfig/network"
+rm -rf /etc/systemd/system/NetworkManager-wait-online.service.d/ || echo "cant remove magic override"
+
