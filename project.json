@@ -14,8 +14,6 @@
             "php71u-pecl-apcu",
             "php71u-pecl-redis",
             "php71u-pdo",
-            "curl = 7.29.0-999.el7",
-            "libcurl = 7.29.0-999.el7",
             "awslogs",
             "dial-agent"
         ],
