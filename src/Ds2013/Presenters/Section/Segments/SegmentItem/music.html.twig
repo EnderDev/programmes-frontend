@@ -48,11 +48,7 @@
                 {# Other Contributions #}
                 {% for contribution in music.getOtherContributions() %}
                     {{ contribution.getCreditRole() }}:
-                    {% if contribution.getContributor().getMusicBrainzId() %}
-                        <a href="{{ path('music_artist', { mbid: contribution.getContributor().getMusicBrainzId() }) }}">{{ contribution.getContributor().getName() }}</a>.
-                    {% else %}
-                        {{ contribution.getContributor().getName() }}.
-                    {% endif %}
+                    {{ contribution.getContributor().getName() }}.
                 {% endfor %}
 
                 {# Synopsis #}
