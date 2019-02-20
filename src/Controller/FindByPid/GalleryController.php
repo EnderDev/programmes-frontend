@@ -23,7 +23,10 @@ class GalleryController extends BaseController
         $this->setContextAndPreloadBranding($gallery);
         $siblingLimit = 4;
         $images = $imagesService->findByGroup($gallery);
-        $image = $this->getFirstImage($imagePid, $images);
+        $image = null;
+        if ($imagePid){
+            $image = $this->getFirstImage($imagePid, $images);
+        }
         $programme = $gallery->getParent();
         $brand = null;
         $galleries = null;
