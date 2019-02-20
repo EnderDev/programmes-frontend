@@ -24,7 +24,7 @@ class GalleryController extends BaseController
         $siblingLimit = 4;
         $images = $imagesService->findByGroup($gallery);
         $image = null;
-        if ($imagePid){
+        if ($imagePid) {
             $image = $this->getFirstImage($imagePid, $images);
         }
         $programme = $gallery->getParent();
