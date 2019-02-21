@@ -55,11 +55,6 @@ playspace_play:
     defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
     requirements: { pid: '[0-9b-df-hj-np-tv-z]{8,15}' }
 
-music_artist:
-    path: /music/artists/{mbid}
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }
-    requirements: { mbid: '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}' }
-
 my_tracks:
     path: /programmes/articles/BHmrZF1Z7JDckzFSZ9cl7l/changes-to-the-bbc-music-website
     defaults: { _controller: FrameworkBundle:Redirect:redirect, route: '' }

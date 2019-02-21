@@ -213,9 +213,7 @@ class SchemaHelper
             ],
             'roleName' => $contribution->getCreditRole(),
         ];
-        if ($contribution->getContributor()->getMusicBrainzId()) {
-            $schema['@id'] = $this->router->generate('music_artist', ['mbid' => $contribution->getContributor()->getMusicBrainzId()]);
-        }
+
         return $schema;
     }
 }
