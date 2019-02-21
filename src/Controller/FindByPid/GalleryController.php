@@ -23,10 +23,7 @@ class GalleryController extends BaseController
         $this->setContextAndPreloadBranding($gallery);
         $siblingLimit = 4;
         $images = $imagesService->findByGroup($gallery);
-        $image = null;
-        if ($imagePid) {
-            $image = $this->getFirstImage($imagePid, $images);
-        }
+        $image = $this->getFirstImage($imagePid, $images);
         $programme = $gallery->getParent();
         $brand = null;
         $galleries = null;
@@ -36,7 +33,6 @@ class GalleryController extends BaseController
         }
         $hasImageHighlighted = !empty($imagePid);
         $this->setAtiContentId((string) $gallery->getPid(), 'pips');
-
         return $this->renderWithChrome('find_by_pid/gallery.html.twig', [
             'gallery' => $gallery,
             'programme' => $programme,
