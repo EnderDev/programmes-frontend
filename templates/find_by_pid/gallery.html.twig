@@ -69,6 +69,7 @@
                                 {% for siblingGallery in galleries %}
                                     <li class="grid 1/2@bpb1 1/2@bpw">
                                         {{ ds2013('group', siblingGallery, {
+                                            'context_programme': programme.getTleo(),
                                             'highlight_box_classes':'highlight-box--list highlight-box--grid@bpb1 programme--grid@bpb1 highlight-box--grid@bpw programme--grid@bpw',
                                             'img_classes': '1/1@bpb1 1/1@bpw',
                                             'show_synopsis': false,

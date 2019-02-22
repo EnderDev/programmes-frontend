@@ -139,7 +139,7 @@ class ProgrammeBodyPresenter extends ProgrammePresenterBase
             return null;
         }
         $programmeMasterbrand = $this->programme->getMasterBrand();
-        $contextMasterbrand = $this->getOption('context_programme') ? $this->getOption('context_programme')->getMasterbrand : null;
+        $contextMasterbrand = $this->getOption('context_programme') ? $this->getOption('context_programme')->getMasterbrand() : null;
         if ($programmeMasterbrand != $contextMasterbrand) {
             return $programmeMasterbrand;
         }
