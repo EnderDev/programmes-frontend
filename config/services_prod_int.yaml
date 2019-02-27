@@ -1,6 +1,6 @@
 parameters:
     app.feed_env.orbit: 'test'
-    app.feed_env.branding: 'live'
+    app.feed_env.branding: 'int'
     app.feed_env.morph.lxpromo: 'test'
     app.electron.baseurl: 'https://api.test.bbc.co.uk/electron'
     app.favourites.baseurl: 'https://www.int.bbc.co.uk/modules/plugin/musicfavourite/init'
