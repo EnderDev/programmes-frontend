@@ -9,7 +9,6 @@ use App\Ds2013\Factory\PresenterFactory;
 use App\Translate\TranslateProvider;
 use App\ValueObject\AnalyticsCounterName;
 use App\ValueObject\AtiAnalyticsLabels;
-use App\ValueObject\ComscoreAnalyticsLabels;
 use App\ValueObject\CosmosInfo;
 use App\ValueObject\IstatsAnalyticsLabels;
 use App\ValueObject\MetaContext;
@@ -233,22 +232,15 @@ abstract class BaseController extends AbstractController
         $this->preRender();
 
         $cosmosInfo = $this->container->get(CosmosInfo::class);
-        $atiAnalyticsLabelsValues = null;
-        if ($this->container->get(Dials::class)->get('ati-stats') === 'true') {
-            $atiAnalyticsLabelsValues = new AtiAnalyticsLabels(
-                $this->context,
-                $this->istatsProgsPageType,
-                $cosmosInfo,
-                $this->atistatsExtraLabels,
-                $this->container->get(Dials::class),
-                $this->atiContentType,
-                $this->atiChapterOne,
-                $this->atiContentId
-            );
-            $atiAnalyticsLabelsValues = $atiAnalyticsLabelsValues->orbLabels();
-        }
-        $istatsAnalyticsLabelsInstance = $this->createIstatsAnalyticsLabelsFromContext();
-        $istatsAnalyticsLabelsValues = $istatsAnalyticsLabelsInstance->orbLabels();
+        $atiAnalyticsLabelsValues = new AtiAnalyticsLabels(
+            $this->context,
+            $cosmosInfo,
+            $this->atistatsExtraLabels,
+            $this->atiContentType,
+            $this->atiChapterOne,
+            $this->atiContentId
+        );
+        $atiAnalyticsLabelsValues = $atiAnalyticsLabelsValues->orbLabels();
 
         $orb = $this->container->get(OrbitClient::class)->getContent([
             'variant' => $this->branding->getOrbitVariant(),
@@ -257,8 +249,6 @@ abstract class BaseController extends AbstractController
             'page' => $atiAnalyticsLabelsValues,
             'searchScope' => $this->orbitSearchScope,
             'skipLinkTarget' => 'programmes-content',
-            'analyticsCounterName' => (string) $this->createAnalyticsCounterNameFromContext(),
-            'analyticsLabels' => $istatsAnalyticsLabelsValues,
         ]);
 
         $queryString = $this->request()->getQueryString();
@@ -267,7 +257,6 @@ abstract class BaseController extends AbstractController
         $parameters = array_merge([
             'orb' => $orb,
             'meta_context' => $this->createMetaContextFromContext(),
-            'comscore' => (new ComscoreAnalyticsLabels($this->context, $cosmosInfo, $istatsAnalyticsLabelsInstance, $this->getCanonicalUrl() . $urlQueryString))->getComscore(),
             'branding' => $this->branding,
             'with_chrome' => true,
             'is_international' => $this->isInternational,

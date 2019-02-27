@@ -56,23 +56,4 @@ class ByYearControllerTest extends BaseWebTestCase
 
         $this->assertResponseStatusCode($client, 404);
     }
-
-    /**
-     * @dataProvider serviceActiveTestProvider
-     */
-    public function testSchedulesByYearIstatsLabels(string $scheduleDate)
-    {
-        $this->loadFixtures(["NetworksAndServicesFixture"]);
-
-        $client = static::createClient();
-        $url = '/schedules/p00rfdrb/' . $scheduleDate;
-
-        $crawler = $client->request('GET', $url);
-
-        $labels = $this->extractIstatsLabels($crawler);
-        $this->assertEquals('schedules_year', $labels['progs_page_type']);
-        $this->assertEquals('iplayerradio', $labels['bbc_site']);
-        $this->assertEquals('bbc_radio_five_live_olympics_extra', $labels['event_master_brand']);
-        $this->assertTrue(is_numeric($labels['app_version']));
-    }
 }

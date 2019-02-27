@@ -16,9 +16,6 @@
 
         {% do preload(asset('https://static.bbci.co.uk/frameworks/jquery/0.4.1/sharedmodules/jquery-1.9.1.js'), { as: 'script', nopush: true }) %}
         {% do preload(asset('js/rv-bootstrap.js'), { as: 'script', nopush: true }) %}
-        {% if comscore %}
-            {% do preload(asset('js/comscorews.js'), { as: 'script', nopush: true }) %}
-        {% endif %}
         {% do dns_prefetch('https://fig.bbc.co.uk') %}
 
         <script>document.documentElement.className += ' has-js';</script>
@@ -41,7 +38,6 @@
                     'jquery-1.9': "https://static.bbci.co.uk/frameworks/jquery/0.4.1/sharedmodules/jquery-1.9.1",
                     'rv-bootstrap': "{{ asset_js('js/rv-bootstrap.js') }}",
                     'timezone-notification': "{{ asset_js('js/timezone-notification.js') }}",
-                    'comscorews': "{{ asset_js('js/comscorews.js') }}",
                     'episode-guide': "{{ asset_js('js/episode-guide.js') }}",
                     'gallery': "{{ asset_js('js/gallery.js') }}",
                     'picturefill': "{{ asset_js('js/picturefill.js') }}",
@@ -77,7 +73,6 @@
         <![endif]-->
         {% block inline_head %}{% endblock %}
 
-        {{ bbc_dotcom_head(comscore) }}
         {% if meta_context.metaNoIndex() %}<meta name="robots" content="noindex">{% endif %}
         {% if meta_context.canonicalUrl() %}<link rel="canonical" href="{{ meta_context.canonicalUrl() }}">{% endif %}
         <meta name="theme-color" content="{{ branding.getColours().highlight.bg|default('#2B2B2B') }}">

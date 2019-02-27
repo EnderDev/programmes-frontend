@@ -11,6 +11,7 @@ class SeriesController extends BaseController
     {
         $this->setIstatsProgsPageType('programmes_series');
         $this->setContextAndPreloadBranding($programme);
+        $this->setAtiContentLabels('foo', 'bar');
 
         return $this->renderWithChrome('find_by_pid/example_entity.html.twig', [
             'programme' => $programme,

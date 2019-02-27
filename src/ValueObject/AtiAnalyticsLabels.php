@@ -3,7 +3,6 @@ declare (strict_types = 1);
 
 namespace App\ValueObject;
 
-use App\Cosmos\Dials;
 use BBC\ProgrammesPagesService\Domain\Entity\Brand;
 use BBC\ProgrammesPagesService\Domain\Entity\Service;
 use BBC\ProgrammesPagesService\Domain\Entity\Network;
@@ -16,16 +15,10 @@ class AtiAnalyticsLabels
     private $context;
 
     /** @var string */
-    private $pageType;
-
-    /** @var string */
     private $appEnvironment;
 
     /** @var array */
     private $extraLabels;
-
-    /** @var mixed */
-    private $dials;
 
     /** @var string */
     private $contentType;
@@ -36,13 +29,11 @@ class AtiAnalyticsLabels
     /** @var string */
     private $contentId;
 
-    public function __construct($context, string $progsPageType, CosmosInfo $cosmosInfo, array $extraLabels, Dials $dials, string $contentType, string $chapterOne, string $contentId = null)
+    public function __construct($context, CosmosInfo $cosmosInfo, array $extraLabels, string $contentType, string $chapterOne, string $contentId = null)
     {
         $this->context = $context;
-        $this->pageType = $progsPageType;
         $this->appEnvironment = $cosmosInfo->getAppEnvironment();
         $this->extraLabels = $extraLabels;
-        $this->dials = $dials;
         $this->contentType = $contentType;
         $this->chapterOne = $chapterOne;
         $this->contentId = $contentId;
@@ -92,11 +83,9 @@ class AtiAnalyticsLabels
             $destination = 'ws_programmes';
         }
 
-//        if (in_array($this->appEnvironment, ['int', 'stage', 'sandbox', 'test'])) {
-        if ($this->dials->get('ati-bucket') === 'test') {
+        if (in_array($this->appEnvironment, ['int', 'stage', 'sandbox', 'test'])) {
             $destination .= '_test';
         }
-//        }
 
         return $destination;
     }

@@ -14,22 +14,3 @@
         });
     </script>
 {% endif %}
-
-{% if comscore %}
-    {# This line is some dark magic to put the title the user sees into the analytics #}
-    {{ comscore.setLabel('c8', title) }}
-    <script>
-        require(['comscorews'], function(comscore) {
-            var csoptions = {
-                labels: {{ comscore.getLabels() | json_encode | raw }},
-                scorecardUrl: {{ comscore.getScorecardUrl() | json_encode | raw }},
-                sscUrl: {{ comscore.getBaseUrl() | json_encode | raw }}
-            };
-            var cs = new comscore(csoptions);
-            cs.sendPageViewBeacon();
-        });
-    </script>
-    <noscript>
-        <img class="visually-hidden" src="{{ comscore.getTrackingUrl() }}" width="1" height="1" />
-    </noscript>
-{% endif %}

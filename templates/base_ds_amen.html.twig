@@ -16,9 +16,6 @@
 
         {% do preload(asset('https://static.bbci.co.uk/frameworks/jquery/0.4.1/sharedmodules/jquery-1.9.1.js'), { as: 'script', nopush: true }) %}
         {% do preload(asset('js/dsamen-bootstrap.js'), { as: 'script', nopush: true }) %}
-        {% if comscore %}
-            {% do preload(asset('js/comscorews.js'), { as: 'script', nopush: true }) %}
-        {% endif %}
         {% do dns_prefetch('https://fig.bbc.co.uk') %}
 
         <script>document.documentElement.className += ' has-js';</script>
@@ -39,7 +36,6 @@
                     'dsamen-bootstrap': "{{ asset_js('js/dsamen-bootstrap.js') }}",
                     'timezone-notification': "{{ asset_js('js/timezone-notification.js') }}",
                     'picturefill': "{{ asset_js('js/picturefill.js') }}",
-                    'comscorews': "{{ asset_js('js/comscorews.js') }}"
                 },
                 "priority": ['jquery-1.9', 'dsamen-bootstrap'],
                 "map": {
@@ -58,7 +54,6 @@
         <![endif]-->
         {% block inline_head %}{% endblock %}
 
-        {{ bbc_dotcom_head(comscore) }}
         {% if meta_context.canonicalUrl() %}<link rel="canonical" href="{{ meta_context.canonicalUrl() }}">{% endif %}
         <meta name="theme-color" content="{{ branding.getColours().highlight.bg|default('#2B2B2B') }}">
         <meta name="description" content="{{ meta_context.description() }}">
